@@ -1,9 +1,27 @@
 
 <!DOCTYPE html>
 <html>
-<head><title>Sample Chart</title></head>
+<head>
+    <title>Dynamic Chart</title>
+</head>
 <body>
-<h1>Chart Rendered by Django</h1>
-<img src="data:image/png;base64,{{ chart }}" alt="Chart">
+    <h1>Draw Your Chart</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        <label for="xdata">X Values (comma-separated):</label><br />
+        <input type="text" name="xdata" size="50" value="{{ x|default:'' }}"><br /><br />
+
+        <label for="ydata">Y Values (comma-separated):</label><br />
+        <input type="text" name="ydata" size="50" value="{{ y|default:'' }}"><br /><br />
+
+        <button type="submit">Draw Chart</button>
+    </form>
+
+    {% if chart %}
+        <h2>Result:</h2>
+        <img src="data:image/png;base64,{{ chart }}" alt="Your Chart" />
+    {% endif %}
 </body>
 </html>
+
